@@ -25,15 +25,25 @@ def hello(request):
     return HttpResponse( body,headers=headers,status=300)
 
 def get_index(request):
-    
-    # print (request.__dict__)
-    if request.method == "GET":
-        return HttpResponse("Главная страница")
-    else :
-        return HttpResponse("Не тот метод запроса")
+    context = {
+        "title": "Main page",
+        "my_list": [1, 2, 3, 4],
+    }
+    return render(request, "posts/index.html", context=context)
+    # # print (request.__dict__)
+    # if request.method == "GET":
+    #     return HttpResponse("Главная страница")
+    # else :
+    #     return HttpResponse("Не тот метод запроса")
 
-def get_info(request):
-    return HttpResponse("info")
+def get_about(request):
+    context ={
+        "title" : "Страница о нас",
+    }
+    return render(request, "posts/about.html", context=context)
 
-def get_help(reguest):
-    return HttpResponse("help")
+def get_contact(request):
+    context ={
+        "title" : "Контакты",
+    }
+    return render(request, "posts/contact.html", context=context)
