@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from posts.models import Post
+from django.views import generic
+from django.urls import reverse_lazy
 
 
 def hello(request):
@@ -12,6 +14,43 @@ def hello(request):
                 }
     return HttpResponse(body, headers = headers, status = 500)
 
+class IndexView(generic.ListView):
+    queryset = Post.objects.filter(status=True)
+    context_object_name = "posts"
+    # model = Post
+    template_name = "posts/index.html"
+
+
+class PostDetailView(generic.DetailView):
+    model = Post
+    context_object_name = "post"
+    template_name = "posts/post_detail.html"
+
+
+class PostCreateView(generic.CreateView):
+    model = Post
+    template_name = "posts/post_create.html"
+    fields = ["title", "content"]
+    success_url = reverse_lazy("index-page")
+
+
+class PostUpdateView(generic.UpdateView):
+    model = Post
+    template_name = "posts/post_update.html"
+    fields = ["title", "content"]
+    success_url = reverse_lazy("index-page")
+
+
+class AboutView(generic.TemplateView):
+    template_name = "posts/about.html"
+    extra_context = {
+        "title": "Страница о нас",
+    }
+
+
+class PostDeleteView(generic.DeleteView):
+    model = Post
+    success_url = reverse_lazy("index-page")
 
 def get_index(request):
     posts  = Post.objects.filter(status=True)
