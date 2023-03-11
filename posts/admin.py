@@ -4,6 +4,7 @@ from posts.models import Post
 # Простой способ регистраций моделей в админке
 # admin.site.register(Post)
 
+
 # Развернутый способ регистраций моделей в админке
 
 @admin.register(Post)

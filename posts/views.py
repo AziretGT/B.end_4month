@@ -96,7 +96,6 @@ def update_post(request):
     }
     return render(request, "posts/post_update.html", context=context)
 
-
 def delete_post(request):
     context = {
         "title": "Пост",
