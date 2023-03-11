@@ -4,7 +4,6 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -17,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=16, verbose_name='Имя пользователя')),
-                ('text', models.CharField(max_length=300, verbose_name='Текст коментария')),
+                ('text', models.CharField(max_length=300, verbose_name='Текст коментарий')),
                 ('created', models.DateTimeField(auto_now=True, verbose_name='Дата создания')),
                 ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post_comment', to='posts.post', verbose_name='Пост')),
             ],
