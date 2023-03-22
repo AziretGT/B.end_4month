@@ -5,6 +5,19 @@ from django.urls import reverse_lazy
 
 from posts.forms import CommentForm, PostForm
 from posts.models import Post, Comment
+from posts.serializers import PostSerializer
+from rest_framework import generics
+
+
+class PostListView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+
+
+class PostDetailAPIView(generics.RetrieveAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    lookup_field = "id"
 
 
 def hello(request):
@@ -46,11 +59,11 @@ class IndexView(generic.ListView):
     # model = Post
     template_name = "posts/index.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        posts = Post.objects.filter(status=True)
+
         context["title"] = "Главная страница"
-        context["posts"] = posts
+
         return context
 
 
@@ -89,11 +102,9 @@ class PostDetailView(generic.DetailView):
 class PostCreateView(generic.CreateView):
     model = Post
     template_name = "posts/post_create.html"
-    # fields = ["title", "content"]
-    success_url = reverse_lazy("index-page")
     form_class = PostForm
-   
-    
+    success_url = reverse_lazy("index-page")
+
 
 class PostUpdateView(generic.UpdateView):
     model = Post
